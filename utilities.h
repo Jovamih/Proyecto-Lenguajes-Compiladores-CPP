@@ -1,32 +1,8 @@
 #include<iostream>
 #include<string>
-#include<cstdio>
-#include<fstream>
-#include<map>
 #include<ctype.h>
 
 using namespace std;
-
-map<string,string> readTableOfSysmbols(string path){
-    ifstream file(path);
-    string line;
-    map<string,string> tabla; //usamos un diccionario
-    //file.open(path);
-    if(file.is_open()){
-       while(getline(file,line)){
-           if(!line.empty()){
-               string tipo=line.substr(0,line.find(":"));
-               string valor=line.substr(line.find(":")+1,-1);
-            tabla[tipo]=valor;
-           }
-       }
-    }else{
-        cout<<"No se encuentra el archivo de la tabla de simbolos";
-    }
-   // tabla.
-    return tabla;
-}
-
 
 struct Token{
     string type="";
