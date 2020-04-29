@@ -8,12 +8,13 @@ int main(int argc, char **argv){
         cout<<"Ingrese el texto a Scanear";
     }else{
        
-           Tokenizer tokenizer(argv[1]);
+            Tokenizer tokenizer(argv[1]);
             while(tokenizer.hasNextToken()){
                 Token token= tokenizer.nextToken();
                 cout<<token.type<<"\t"<<token.value<<endl;
-
-             }
+            }
+ 
+            
     }
     return 0;
 }
