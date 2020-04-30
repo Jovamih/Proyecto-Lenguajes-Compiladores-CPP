@@ -63,7 +63,6 @@ Token Tokenizer:: nextToken(){
     return token;
 } 
 bool Tokenizer:: hasNextToken(){
-    if(possibleTokens.length()>currentIndex) return true;
-    else return false;
+    return possibleTokens.length()>currentIndex;
     //return currentIndex<0
 }
