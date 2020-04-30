@@ -24,8 +24,11 @@ Tokenizer:: Tokenizer(string token){
 }
 Token Tokenizer:: nextToken(){
     Token token;
-    do{
+
+    while(possibleTokens[currentIndex]==' ') currentIndex++; //anulamos los espacios en blanco
     char character=possibleTokens[currentIndex];
+    if(character=='/'&&possibleTokens[currentIndex+1]=='/') currentIndex=possibleTokens.length();
+    else
     if(isalpha(character)){
         while(isalpha(character) || isdigit(character) ){
             token.value+=character;
@@ -40,16 +43,11 @@ Token Tokenizer:: nextToken(){
             character=possibleTokens[currentIndex];
         }
         token.type="NUM";
-    }else if(string("{},;!%&/()=?*+-|").find(character)!=-1){
-         
+    }else if(string("{},;!%&/()=?*+-|<>").find(character)!=-1){
+         token.value+=character;
          currentIndex++;
-         char nextChar=possibleTokens[currentIndex];
-         if(character=='/'&&nextChar=='/'){
-           currentIndex=possibleTokens.length();
-           break;
-         } 
-         else{
-             token.value+=character;
+         char nextChar=possibleTokens.length()>currentIndex? possibleTokens[currentIndex]:'0';
+         
          if((character=='+'&&(nextChar=='+' || nextChar=='=')) ||
            (character=='-' &&(nextChar=='-' || nextChar=='=')) ||
            (character=='='&&nextChar=='=') ||
@@ -57,18 +55,11 @@ Token Tokenizer:: nextToken(){
            (character=='/'&&nextChar=='=') ){
             
             token.value+=nextChar;
-            currentIndex++;
-            
+            currentIndex++;        
         }
         token.type="OP";
-        }
-        //si existe commentario lo esquivamos hasta el final de la linea   
-    }else{
-        //si no es un caracter reconocido, pues eguimos avanzando
-        //puede ser: '', ' ',^
-        currentIndex++;
-    }
-    }while(token.type.empty());
+        //si existe un caracter que no se encuentra entre os valors verficados no se cuenta(Por ahora) 
+    }else currentIndex++;
     return token;
 } 
 bool Tokenizer:: hasNextToken(){
